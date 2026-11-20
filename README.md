@@ -32,7 +32,7 @@ This documentation was produced through a complete source-code audit of the repo
 ### Application Subsystems
 4. **[04 — Frontend Documentation](./04-Frontend-Documentation.md)** — Ionic Angular web/mobile client (`Project/`) and Flet desktop client (`desktop_client/`) architecture, pages/screens, workflows, and developer guide.
 5. **[05 — Backend Documentation](./05-Backend-Documentation.md)** — FastAPI entry point, middleware stack, rate limiting, services, routing lifecycle, and external API integrations.
-6. **[06 — API Reference](./06-API-Reference.md)** — Complete REST API specification for all 20 backend endpoints plus Cloudflare Worker edge routes, with verified payloads and error codes.
+6. **[06 — API Reference](./06-API-Reference.md)** — Complete REST API specification for all 27 backend endpoints plus Cloudflare Worker edge routes, with verified payloads and error codes.
 7. **[07 — Database Documentation](./07-Database-Documentation.md)** — Full 8-table schema, Alembic migrations (`0001`–`0004`), indexes, relationships, ORM operations, and DBA guide.
 8. **[08 — Business Logic](./08-Business-Logic.md)** — Deep dive into the deterministic itinerary generator (Haversine clustering, Bayesian quality scoring, opening-hours gate, 2-Opt TSP), routing fallbacks, offline sync, and guest migration.
 

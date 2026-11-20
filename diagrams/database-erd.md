@@ -1,15 +1,15 @@
 # Database Entity Relationship Diagram (ERD)
 
-Verified 8-table schema from `backend/app/models/entities.py` and Alembic migrations `0001`–`0004`.
+Complete verified 8-table, 109-column schema from `backend/app/models/entities.py` and Alembic migrations `0001`–`0004` (1:1 match with `07-Database-Documentation.md`).
 
 ```mermaid
 erDiagram
-    USERS ||--o{ AUTH_IDENTITIES : "links OAuth"
+    USERS ||--o{ AUTH_IDENTITIES : "has linked OAuth (CASCADE)"
     USERS ||--o{ ITINERARIES : "owns (CASCADE)"
     MUNICIPALITIES ||--o{ PLACES : "contains (SET NULL)"
-    ITINERARIES ||--o{ ITINERARY_DAYS : "has days (CASCADE)"
-    ITINERARY_DAYS ||--o{ ITINERARY_ITEMS : "has stops (CASCADE)"
-    PLACES ||--o{ ITINERARY_ITEMS : "linked POI (SET NULL)"
+    ITINERARIES ||--o{ ITINERARY_DAYS : "composed of (CASCADE)"
+    ITINERARY_DAYS ||--o{ ITINERARY_ITEMS : "schedules (CASCADE)"
+    PLACES ||--o{ ITINERARY_ITEMS : "referenced by (SET NULL)"
 
     USERS {
         uuid id PK
@@ -50,11 +50,11 @@ erDiagram
 
     PLACES {
         uuid id PK
-        uuid municipality_id FK
         varchar name
         varchar category
         float latitude
         float longitude
+        uuid municipality_id FK
         varchar address_text
         text description
         varchar phone
@@ -63,17 +63,28 @@ erDiagram
         numeric estimated_cost_min
         numeric estimated_cost_max
         varchar cost_currency
+        varchar image_url
+        varchar image_license
         varchar source_name
         varchar source_record_id
-        varchar google_place_id UK
-        float rating
-        int user_rating_count
-        int price_level
-        jsonb tags
-        jsonb photos
-        jsonb reviews
+        varchar source_url
+        timestamptz imported_at
+        timestamptz verified_at
         boolean is_featured
         boolean is_active
+        jsonb tags
+        varchar google_place_id UK
+        jsonb google_types
+        text editorial_summary
+        jsonb regular_opening_hours
+        float rating
+        integer user_rating_count
+        integer price_level
+        jsonb photos
+        jsonb reviews
+        varchar business_status
+        varchar google_maps_uri
+        timestamptz details_cached_at
     }
 
     ITINERARIES {
@@ -94,12 +105,12 @@ erDiagram
     ITINERARY_DAYS {
         uuid id PK
         uuid itinerary_id FK
-        int day_number
+        integer day_number
         date travel_date
         varchar title
         text day_overview_polyline
-        int total_distance_meters
-        int total_travel_duration_seconds
+        integer total_distance_meters
+        integer total_travel_duration_seconds
         jsonb route_legs
     }
 
@@ -110,17 +121,19 @@ erDiagram
         varchar custom_title
         float custom_lat
         float custom_lng
-        int sort_order
+        integer sort_order
         time planned_time
-        int duration_minutes
+        integer duration_minutes
         text notes
         numeric estimated_cost_min
         numeric estimated_cost_max
         varchar google_place_id
         varchar travel_mode_from_prev
-        int travel_distance_meters
-        int travel_duration_seconds
+        integer travel_distance_meters
+        integer travel_duration_seconds
         text route_polyline_from_prev
+        timestamptz created_at
+        timestamptz updated_at
     }
 
     GEOSPATIAL_CACHE {

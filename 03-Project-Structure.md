@@ -48,7 +48,7 @@ Itinerary-App/
 │   │   ├── api/v1/
 │   │   │   ├── auth.py                   # /api/v1/auth/* endpoints (7 routes)
 │   │   │   ├── places.py                 # /api/v1/municipalities & /api/v1/places/* (6 routes)
-│   │   │   └── itineraries.py            # /api/v1/itineraries/* (12 routes, BOLA-enforced)
+│   │   │   └── itineraries.py            # /api/v1/itineraries/* (13 routes, BOLA-enforced)
 │   │   ├── services/
 │   │   │   ├── auth_service.py           # Argon2id hashing, PyJWT, Google ID token verification
 │   │   │   └── google_maps_service.py    # Places v1, Routes v2, OSRM, Haversine, KV/DB cache, upsert

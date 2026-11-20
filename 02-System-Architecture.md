@@ -107,7 +107,7 @@ flowchart TB
   - `/api/v1/health` (liveness)
   - `/api/v1/auth/*` (7 routes)
   - `/api/v1/municipalities` & `/api/v1/places/*` (6 routes)
-  - `/api/v1/itineraries/*` (12 routes)
+  - `/api/v1/itineraries/*` (13 routes)
 - **Cloudflare Worker Reverse Proxy (`cloudflare-worker/worker.js`)**:
   - Solves dynamic tunnel URL rotation when hosting the backend on a local machine.
   - `scripts/start_server.ps1` / `scripts/run_daemon.py` POSTs active Cloudflare Tunnel & ngrok URLs to `/__sync_tunnel` (authenticated via `X-Admin-Sync-Key`), persisting them in Cloudflare KV (`ACTIVE_TUNNELS`).

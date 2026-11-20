@@ -75,6 +75,12 @@ This architectural review catalogs **verified defects, security gaps, incomplete
 - **Current Condition**: Expired rows in `geospatial_cache` are never purged automatically; backend lacks structured JSON logs and request IDs.
 - **Recommended Solution**: Add a periodic cleanup task or CLI command (`DELETE FROM geospatial_cache WHERE expires_at < NOW()`) and adopt structured JSON logging for production diagnostics.
 
+### 11b. ORM-vs-Alembic Index Drift (`ix_places_lat_lng_active`)
+- **Current Condition**: `Place.__table_args__` in `backend/app/models/entities.py` declares `Index("ix_places_lat_lng_active", "latitude", "longitude", "is_active")`, which is created on SQLite via `Base.metadata.create_all`, but is missing from Alembic migrations `0001`–`0004`.
+- **Why It Is a Problem**: PostgreSQL databases initialized via `alembic upgrade head` do not receive this composite bounding-box index, creating schema parity drift between SQLite and PostgreSQL.
+- **Recommended Solution**: Generate a new Alembic migration (`0005`) adding `ix_places_lat_lng_active` on `places (latitude, longitude, is_active)`.
+- **Affected Files**: `backend/app/models/entities.py`, `backend/alembic/versions/`.
+
 ---
 
 ## LOW Priority (Repository Hygiene & Nice-to-Have)
